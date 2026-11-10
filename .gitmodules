@@ -1,0 +1,6 @@
+[submodule "OrbitResources"]
+	path = OrbitResources
+	url = https://github.com/Orbitingpoint/OrbitResources
+[submodule "OrbitExtraResources"]
+	path = OrbitExtraResources
+	url = https://github.com/Orbitingpoint/OrbitExtraResources

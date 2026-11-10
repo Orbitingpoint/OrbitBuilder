@@ -1,0 +1,20 @@
+-cp src
+-main ob.OrbitBuilder
+-cpp bin
+--library haxeui-core
+--library haxeui-hxwidgets
+
+-resource OrbitResources/res/deobf.map@deobf.map
+-resource OrbitResources/res/target.json@target.json
+
+# mods
+-resource OrbitResources/res/mods/guard-advanced-reproduce.zip@mods/guard-advanced-reproduce.zip
+-resource OrbitResources/res/mods/image-scale-medium.zip@mods/image-scale-medium.zip
+-resource OrbitResources/res/mods/screen-fit-window.zip@mods/screen-fit-window.zip
+-resource OrbitResources/res/mods/live-resize.zip@mods/live-resize.zip
+-resource OrbitResources/res/mods/server-redirect.zip@mods/server-redirect.zip
+# assets
+-resource OrbitResources/res/icon.ico@icon.ico
+
+# extra assets
+--cmd haxe -cp tools --run CopyPcPack bin
