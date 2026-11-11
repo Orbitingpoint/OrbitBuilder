@@ -40,7 +40,7 @@ import sys.thread.Thread;
   </hbox>
 
   <vbox id="modBox" width="100%" height="176" style="spacing:2px;">
-    <label text="Mods (mods/*.zip: mod.json + one .as)" />
+    <label text="Mods" />
   </vbox>
 
   <vbox id="logBox" width="100%" height="100%" style="spacing:2px;">
@@ -52,7 +52,6 @@ import sys.thread.Thread;
     <button id="decompBtn" text="Decompile" width="130" height="32" />
     <button id="cfgBtn" text="Configure mod..." width="130" height="32" />
     <checkbox id="deobfCheck" text="Deobfuscate (readable names)" />
-    <label text="  APK is input only - no Android output." />
   </hbox>
 
   <hbox width="100%" height="70" style="spacing:6px;">

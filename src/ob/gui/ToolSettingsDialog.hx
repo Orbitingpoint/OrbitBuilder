@@ -54,8 +54,8 @@ class ToolSettingsDialog extends Dialog {
 		dialogContent.styleString = "spacing: 4px;";
 
 		var intro = new Label();
-		intro.text = "These paths point at the programs and files used to build the PC game. "
-			+ "Set them once; they are saved to " + ObSettings.filePath(appDir) + ".";
+		intro.text = "Paths pointing towards files used to build the game. "
+			+ "they are saved to " + ObSettings.filePath(appDir) + ".";
 		intro.percentWidth = 100;
 		intro.wordWrap = true;
 		dialogContent.addComponent(intro);
@@ -70,7 +70,7 @@ class ToolSettingsDialog extends Dialog {
 			"JPEXS Free Flash Decompiler jar, used to decompile and replace ActionScript classes.",
 			[{label: "FFDec jar", extension: "jar"}]);
 
-		addHeading("Packaging inputs");
+		addHeading("External files");
 		addRow("aneDir", "ANE folder", source.aneDir, "dir",
 			"Folder holding the Windows .ane files listed by the app descriptor (at least 15 are required).");
 		addRow("appDesc", "App descriptor XML", source.appDesc, "file",
@@ -123,7 +123,7 @@ class ToolSettingsDialog extends Dialog {
 	function addHeading(text:String):Void {
 		var label = new Label();
 		label.text = text;
-		label.styleString = "font-size: 15px; color: #1F4E79; margin-top: 8px;";
+		label.styleString = "font-size: 15px; color: #1F4E79; margin-top: 4px;";
 		dialogContent.addComponent(label);
 	}
 
