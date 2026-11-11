@@ -80,7 +80,8 @@ jobs:
           if ($hash -ne $env:WX_SHA256) {
             throw "wxWidgets archive checksum mismatch: $hash"
           }
-          Expand-Archive $zip -DestinationPath "C:\" -Force
+          New-Item -ItemType Directory -Force $env:WXWIN | Out-Null
+          Expand-Archive $zip -DestinationPath $env:WXWIN -Force
 
       - name: Cache wxWidgets build
         id: wx-cache
