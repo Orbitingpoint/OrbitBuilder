@@ -1,4 +1,4 @@
-# ![[OrbitExtraResources/icons/icon-192.png|40]]rbitBuilder
+# <img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-192.png" width="40" height="40" alt="OrbitBuilder icon">rbitBuilder
 
 ## Usage
 
@@ -39,10 +39,11 @@ For example:
 
 In particular, you may find that the AIR SDK and the ane folder are missing.
 
-- **AIR SDK:** You can download it from the [official AIR SDK documentation](https://airsdk.dev/docs/basics/install/windows).
+&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-48.png" width="10" height="10" alt="icon"> **AIR SDK:** You can download it from the [official AIR SDK documentation](https://airsdk.dev/docs/basics/install/windows).
     
-- **ANE files:** These are not included in this repository because they contain native libraries used by the game to interact with the device.
-    A recreation of those can be found in the [OrbitAne repository](https://github.com/Orbitingpoint/OrbitAne).
+&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-48.png" width="10" height="10" alt="icon"> **ANE files:** Not included in this repository because they contain native libraries used by the game to
+&nbsp;&nbsp;&nbsp;&nbsp; interact with the device.<br>
+&nbsp;&nbsp; A recreation of those can be found in the [OrbitAne repository](https://github.com/Orbitingpoint/OrbitAne).
 
 Download the `out_shim` directory and extract it. Your directory structure should look something like this:
 
@@ -65,11 +66,13 @@ The resulting file will be placed in the specified output folder.
 
 ### Requirements
 
-Haxe "Preferably, the latest version of Haxe."
+[Haxe](https://haxe.org) "Preferably, the latest version of Haxe."
 
 and the following haxe libs:
-	![[OrbitExtraResources/icons/icon-48.png|20]] haxeui-core
-	![[OrbitExtraResources/icons/icon-48.png|20]] haxeui-hxwidgets
+
+&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-48.png" width="10" height="10" alt="icon"> [haxeui-core](https://github.com/haxeui/haxeui-core)<br>
+
+&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-48.png" width="10" height="10" alt="icon"> [haxeui-hxwidgets](https://github.com/haxeui/hxwidgets)
 
 All of which can be installed with the following command:
 
