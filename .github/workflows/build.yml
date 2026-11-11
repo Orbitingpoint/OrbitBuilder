@@ -108,14 +108,30 @@ jobs:
           Copy-Item "$env:WXWIN\lib\vc_x64_dll\*.dll" bin\ -Force
           Get-ChildItem bin -Filter *.dll | Select-Object Name, Length
 
+      - name: Package zip
+        shell: pwsh
+        run: |
+          $items = @()
+          foreach ($p in @("bin\OrbitBuilder.exe", "bin\OrbitBuilder.exe.manifest")) {
+            if (Test-Path $p) { $items += (Resolve-Path $p).Path }
+          }
+          $items += @(Get-ChildItem bin -Filter *.dll -ErrorAction SilentlyContinue |
+            ForEach-Object { $_.FullName })
+          if (Test-Path bin\pc-pack) {
+            $items += (Resolve-Path bin\pc-pack).Path
+          }
+          if ($items.Count -eq 0) { throw "No build output found in bin" }
+
+          $zip = Join-Path $PWD "OrbitBuilder-windows-x64.zip"
+          Remove-Item $zip -ErrorAction SilentlyContinue
+          Compress-Archive -Path $items -DestinationPath $zip -CompressionLevel Optimal
+          $size = [math]::Round((Get-Item $zip).Length / 1MB, 2)
+          "Created $zip ($size MB)"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: OrbitBuilder-windows-x64
           if-no-files-found: error
           retention-days: 14
-          path: |
-            bin/OrbitBuilder.exe
-            bin/OrbitBuilder.exe.manifest
-            bin/*.dll
-            bin/pc-pack/**
+          path: OrbitBuilder-windows-x64.zip
