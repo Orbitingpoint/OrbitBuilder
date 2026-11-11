@@ -41,7 +41,7 @@ In particular, you may find that the AIR SDK and the ane folder are missing.
 
 &nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-48.png" width="10" height="10" alt="icon"> **AIR SDK:** You can download it from the [official AIR SDK documentation](https://airsdk.dev/docs/basics/install/windows).
     
-&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-48.png" width="10" height="10" alt="icon"> **ANE files:** Not included in this repository because they contain native libraries used by the game to interact with the device.
+&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-48.png" width="10" height="10" alt="icon"> **ANE files:** Not included in this repository because they contain native libraries used by the game to interact with &nbsp;&nbsp;&nbsp;&nbsp;the device. <br>
 &nbsp;&nbsp; A recreation of those can be found in the [OrbitAne repository](https://github.com/Orbitingpoint/OrbitAne).
 
 Download the `out_shim` directory and extract it. Your directory structure should look something like this:
