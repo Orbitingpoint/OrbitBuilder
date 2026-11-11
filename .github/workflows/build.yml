@@ -100,7 +100,7 @@ jobs:
       - name: Build OrbitBuilder
         shell: pwsh
         run: |
-          haxe build.hxml
+          haxe build.hxml -D HXCPP_M64
 
       - name: Copy wxWidgets runtime DLLs
         shell: pwsh
