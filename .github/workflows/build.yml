@@ -1,0 +1,120 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  HAXE_VERSION: 4.3.6
+  HXCPP_VERSION: 4.3.2
+  HAXEUI_CORE_VERSION: 1.7.0
+  HAXEUI_HXWIDGETS_VERSION: 1.7.0
+  HXWIDGETS_VERSION: 1.12.0
+  WX_VERSION: 3.3.4
+  WX_SHA256: a604fe40a59e6515eac3efe58deca38b54b7ef7f3c1df0906559bde6de1e2f58
+
+jobs:
+  build:
+    name: Windows x64
+    runs-on: windows-latest
+    timeout-minutes: 120
+
+    env:
+      WXWIN: C:\wxWidgets-3.3.4
+      HAXELIB_DIR: C:\haxelib
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Haxe
+        uses: krdlab/setup-haxe@v2
+        with:
+          haxe-version: ${{ env.HAXE_VERSION }}
+
+      - name: Set up MSVC (x64)
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Set up haxelib
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force $env:HAXELIB_DIR | Out-Null
+          haxelib setup $env:HAXELIB_DIR
+
+      - name: Cache haxelib
+        uses: actions/cache@v4
+        with:
+          path: C:\haxelib
+          key: haxelib-${{ runner.os }}-haxe${{ env.HAXE_VERSION }}-hxcpp${{ env.HXCPP_VERSION }}-hxwidgets${{ env.HXWIDGETS_VERSION }}-haxeui${{ env.HAXEUI_CORE_VERSION }}-haxeui-hxwidgets${{ env.HAXEUI_HXWIDGETS_VERSION }}
+
+      - name: Install Haxe libraries
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          haxelib install hxcpp $env:HXCPP_VERSION --quiet
+          haxelib install hxWidgets $env:HXWIDGETS_VERSION --quiet
+          haxelib install haxeui-core $env:HAXEUI_CORE_VERSION --quiet
+          haxelib install haxeui-hxwidgets $env:HAXEUI_HXWIDGETS_VERSION --quiet
+          haxelib list
+
+      - name: Download wxWidgets source
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $zip = Join-Path $env:RUNNER_TEMP "wxWidgets-$env:WX_VERSION.zip"
+          curl.exe -fsSL --retry 3 -o $zip "https://github.com/wxWidgets/wxWidgets/releases/download/v$env:WX_VERSION/wxWidgets-$env:WX_VERSION.zip"
+          $hash = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne $env:WX_SHA256) {
+            throw "wxWidgets archive checksum mismatch: $hash"
+          }
+          Expand-Archive $zip -DestinationPath "C:\" -Force
+
+      - name: Cache wxWidgets build
+        id: wx-cache
+        uses: actions/cache@v4
+        with:
+          path: C:\wxWidgets-3.3.4\lib
+          key: wxwidgets-${{ env.WX_VERSION }}-msvc-x64-dll-v1
+
+      - name: Build wxWidgets (x64 DLL)
+        if: steps.wx-cache.outputs.cache-hit != 'true'
+        shell: pwsh
+        working-directory: C:\wxWidgets-3.3.4\build\msw
+        run: |
+          nmake /nologo /f makefile.vc BUILD=release SHARED=1 TARGET_CPU=X64
+
+      - name: Build OrbitBuilder
+        shell: pwsh
+        run: |
+          haxe build.hxml
+
+      - name: Copy wxWidgets runtime DLLs
+        shell: pwsh
+        run: |
+          Copy-Item "$env:WXWIN\lib\vc_x64_dll\*.dll" bin\ -Force
+          Get-ChildItem bin -Filter *.dll | Select-Object Name, Length
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OrbitBuilder-windows-x64
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            bin/OrbitBuilder.exe
+            bin/OrbitBuilder.exe.manifest
+            bin/*.dll
+            bin/pc-pack/**
