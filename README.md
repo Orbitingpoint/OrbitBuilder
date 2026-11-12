@@ -1,8 +1,11 @@
 # <img src="https://raw.githubusercontent.com/Orbitingpoint/OrbitExtraResources/main/icons/icon-192.png" width="40" height="40" alt="OrbitBuilder icon">rbitBuilder
 
+### Latest download can be found [here](https://github.com/Orbitingpoint/OrbitBuilder/releases)
+
+---
 ## Usage
 
-### Building the executable
+### Building the game's executable
 
 **1. Select the APK**
 
